@@ -1,23 +1,23 @@
-# AI Usage
+# AI 使用说明
 
-## AI Used
+## 使用了什么 AI
 
 - OpenAI Codex
 
-## How AI Helped
+## AI 帮了什么
 
-- Helped break the prompt into a state-machine design.
-- Helped draft the initial Python package layout.
-- Helped generate tests for the required business rules.
-- Helped write the architecture and report notes.
+- 帮助拆解题目，整理成状态机设计
+- 帮助搭建 Python 包结构
+- 帮助生成符合业务规则的测试
+- 帮助撰写架构说明和报告说明
 
-## Human Verification
+## 人工验证方式
 
-- Reviewed the implementation logic manually.
-- Ran the test suite with:
+- 人工检查实现逻辑
+- 使用以下命令运行测试：
 
 ```bash
 python -m unittest discover -s tests -p "test_*.py" -q
 ```
 
-- Confirmed all tests passed locally.
+- 已确认测试全部通过

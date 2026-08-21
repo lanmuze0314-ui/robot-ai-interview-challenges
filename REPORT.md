@@ -1,51 +1,51 @@
-# Report
+# 报告
 
-## Completion Status
+## 完成情况
 
-- Implemented the core robot greeting application.
-- Implemented the event-driven state machine for enter, leave, conversation, meeting, and tick handling.
-- Implemented snapshot isolation.
-- Added tests for the required scenarios.
+- 已实现机器人迎宾应用的核心逻辑
+- 已实现 `PERSON_ENTERED`、`PERSON_LEFT`、`CONVERSATION_STARTED`、`CONVERSATION_ENDED`、`MEETING_STARTED`、`MEETING_ENDED`、`TICK` 的事件状态机
+- 已实现 `snapshot()` 隔离
+- 已补充题目要求的测试场景
 
-## Test Command
+## 测试命令
 
 ```bash
 python -m unittest discover -s tests -p "test_*.py" -q
 ```
 
-## Test Result
+## 测试结果
 
-- 7 tests passed.
+- 7 个测试全部通过
 
-## ROS 2 Judgment Notes
+## ROS 2 判断题说明
 
-- Fact: The application created a `ROBOT_ACTION` effect with `wave_hand`.
-- Fact: The bridge accepted an asynchronous task.
-- Fact: `ros2 action info` showed no action server.
-- Fact: `systemctl is-active robot-action.service` reported inactive.
+- 事实：应用层已经创建了一个 `ROBOT_ACTION` 类型的 `wave_hand` 效果
+- 事实：桥接层已经接受了一个异步任务
+- 事实：`ros2 action info` 显示没有 action server
+- 事实：`systemctl is-active robot-action.service` 显示服务未运行
 
-### Answers
+### 答案
 
-1. What is already proven
-   - The request was created and handed to the bridge.
-   - The downstream ROS 2 action server was not confirmed to be running.
+1. 已经能证明什么
+   - 能证明请求已经创建并交给了桥接层
+   - 不能证明下游 ROS 2 action server 已经在运行
 
-2. Does `accepted_async` mean the robot has already waved
-   - No. It only means the async request was accepted.
+2. `accepted_async` 是否代表机器人已经完成挥手
+   - 不能。它只代表异步请求被接受了
 
-3. Most likely problem layer
-   - The problem is most likely in the execution/bridge/ROS 2 layer, not in the application layer that created the effect.
+3. 问题最可能在哪一层
+   - 最可能在执行层、桥接层或 ROS 2 层，而不是应用层本身
 
-4. Next inspection order
-   - Check whether the ROS 2 action server is running.
-   - Check whether the bridge can reach the action server.
-   - Check whether the robot action service is active.
-   - Then verify hardware execution or SDK integration.
+4. 下一步按什么顺序检查
+   - 先检查 ROS 2 action server 是否运行
+   - 再检查桥接层是否能连到 action server
+   - 再检查机器人动作服务是否激活
+   - 最后检查硬件执行或 SDK 集成
 
-5. Can the real action be executed now
-   - No. There is no evidence that the action server or service is active, so the real robot action cannot be assumed to be executable.
+5. 当前能否直接执行真实动作，为什么
+   - 不能。没有证据表明 action server 或 service 已经正常运行，所以不能直接认为真实动作可以执行
 
-## Known Limits
+## 已知限制
 
-- The implementation assumes a single active visitor session at a time.
-- Suppressed departures are intentionally not backfilled after conversation or meeting periods.
+- 该实现默认只考虑单个活跃访客会话
+- 对话或会议期间被抑制的送客动作，不会在结束后补发
